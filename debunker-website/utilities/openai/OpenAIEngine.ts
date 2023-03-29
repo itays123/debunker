@@ -14,7 +14,7 @@ class OpenAIEngine implements IOpenAIEngine {
 
     constructor(config: OpenAIEngineConfig) {
         const configuration = new Configuration({
-            apiKey: process.env.API_KEY
+            apiKey: process.env.OPENAI_API_KEY
         })
         this.apiRef = new OpenAIApi(configuration);
         this.config = config

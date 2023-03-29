@@ -13,7 +13,7 @@ abstract class FactCheckEngine {
         this.data = data;
     }
 
-    protected abstract check(statements: string): Promise<Correction[]>
+    abstract check(statements: string): Promise<Correction[]>
 }
 
 export type FactEngineConstuctor<Class extends FactCheckEngine> = new (data: string) => Class;

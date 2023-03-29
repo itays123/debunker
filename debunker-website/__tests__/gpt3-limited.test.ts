@@ -3,8 +3,6 @@ import FactCheckEngine from "@/utilities/engine/FactEngine";
 import OpenAIInjectedFactEngine from "@/utilities/engine/OpenAIInjectedFactEngine";
 import OpenAIEngine from "@/utilities/openai/OpenAIEngine";
 import { IDataInjector } from "@/utilities/types";
-import { assert } from "node:console";
-import { describe } from "node:test";
 
 const testInjector: IDataInjector = {
     async getData() {
@@ -16,10 +14,20 @@ const testInjector: IDataInjector = {
     },
 }
 
+const TEST_STATEMENT = "השופטים בישראל ממנים את עצמם.";
+
 describe("Creates a test for a limited scope, using gpt-3", () => {
+    jest.setTimeout(40_000);
     let engine: FactCheckEngine;
+    it("Ensures the OpenAI API key is properly loaded", () => {
+        expect(process.env.OPENAI_API_KEY).toBeDefined();
+    })
     it("Creates the fack check module", async () => {
         engine = (await DataInjectedFactEngine.withInjectedData(testInjector, OpenAIInjectedFactEngine))
             .withOpenAI(new OpenAIEngine({ model: "gpt-3.5-turbo" }));
+    })
+    it("tests it against a statement", async () => {
+        const corrections = await engine.check(TEST_STATEMENT);
+        console.log(corrections);
     })
 })
