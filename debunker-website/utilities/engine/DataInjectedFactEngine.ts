@@ -1,6 +1,4 @@
-import { Correction } from "@/interfaces";
 import { IDataInjector } from "../types";
-import { SYSTEM_PROMPT_OPENING } from "@/consts";
 import FactCheckEngine, { FactEngineConstuctor } from "./FactEngine";
 
 /**
@@ -11,9 +9,7 @@ import FactCheckEngine, { FactEngineConstuctor } from "./FactEngine";
 abstract class DataInjectedFactEngine extends FactCheckEngine {
 
     public static async withInjectedData<Class extends DataInjectedFactEngine>(injector: IDataInjector, instance: FactEngineConstuctor<Class>): Promise<Class> {
-        const injectedData = await injector.getData();
-        const prompt = `${SYSTEM_PROMPT_OPENING}\n ${injectedData}`;
-        return new instance(prompt);
+        return new instance(await injector.getData());
     }
 
 }
