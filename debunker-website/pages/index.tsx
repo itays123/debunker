@@ -1,3 +1,7 @@
+import Footer from "@/components/footer";
+import Feed from "@/components/icons/Feed";
+import LightBulb from "@/components/icons/LightBulb";
+import Search from "@/components/icons/Search";
 import Head from "next/head";
 
 export default function Home() {
@@ -20,7 +24,7 @@ export default function Home() {
           <h2 className="text-xl">נלחמים בתופעת הפייק!</h2>
         </header>
         <main>{/* Here will be the main dialoug */}</main>
-        {/* Here will be the application footer */}
+        <Footer />
       </div>
     </>
   );
