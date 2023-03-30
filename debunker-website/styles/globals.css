@@ -4,6 +4,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 
 @layer base {
+  :root {
+    @apply bg-slate-200;
+  }
   * {
     @apply font-sans;
     direction: rtl;
