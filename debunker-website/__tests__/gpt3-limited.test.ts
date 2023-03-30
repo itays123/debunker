@@ -29,5 +29,6 @@ describe("Creates a test for a limited scope, using gpt-3", () => {
     it("tests it against a statement", async () => {
         const corrections = await engine.check(TEST_STATEMENT);
         console.log(corrections);
+        expect(corrections.length).toBeDefined();
     })
 })

@@ -26,7 +26,7 @@ class OpenAIInjectedFactEngine extends DataInjectedFactEngine {
             throw new Error("OpenAI Engine not found");
         const response = await this.openai.aggregate(`${SYSTEM_PROMPT_OPENING}\n ${this.data}`, statements);
         // assert response is of format "[{ Statement: .... Correction: ...}]"
-        return JSON.parse(response) as Correction[];
+        return JSON.parse(response).corrections as Correction[];
     }
 }
 
