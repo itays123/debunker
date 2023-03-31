@@ -4,7 +4,10 @@ import DocumentHead from "@/components/head/DocumentHead";
 export default function Home() {
   return (
     <>
-      <DocumentHead />
+      <DocumentHead
+        title="מקורות מידע"
+        description="This is the data used to debunk statements"
+      />
       <div>
         <header className="py-12 text-center space-y-4">
           <h1 className="font-bold text-2xl dir-ltr">
