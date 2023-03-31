@@ -6,11 +6,13 @@ export default function Source() {
   return (
     <>
       <DocumentHead
-        title="מקורות מידע"
-        description="This is the data used to debunk statements"
+        title="פיד ניפוצים"
+        description="This is the debunking feed page"
       />
       <div>
-        <PageHeader title="מקורות מידע" />
+        <PageHeader title="פיד ניפוצים">
+          <h2>יושק בקרוב!</h2>
+        </PageHeader>
         <main>{/* Here will be the main dialoug */}</main>
         <Footer />
       </div>

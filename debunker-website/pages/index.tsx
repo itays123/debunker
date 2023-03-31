@@ -1,17 +1,15 @@
 import Footer from "@/components/footer";
 import DocumentHead from "@/components/head/DocumentHead";
+import PageHeader from "@/components/header/PageHeader";
 
 export default function Home() {
   return (
     <>
       <DocumentHead />
       <div>
-        <header className="py-12 text-center space-y-4">
-          <h1 className="font-bold text-2xl dir-ltr">
-            Debunker · מנפץ הפייקים
-          </h1>
+        <PageHeader>
           <h2 className="text-xl">נלחמים בתופעת הפייק!</h2>
-        </header>
+        </PageHeader>
         <main>{/* Here will be the main dialoug */}</main>
         <Footer />
       </div>
