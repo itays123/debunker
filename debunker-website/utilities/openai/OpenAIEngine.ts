@@ -27,7 +27,6 @@ class OpenAIEngine implements IOpenAIEngine {
             prompt: createPrompt(data, statement),
         });
         const result = completion.data.choices[0].text;
-        console.log(result);
         if (result) 
             return result;
         throw new Error("Could not get response");

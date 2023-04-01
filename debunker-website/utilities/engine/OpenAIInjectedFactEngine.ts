@@ -25,7 +25,6 @@ class OpenAIInjectedFactEngine extends DataInjectedFactEngine {
             throw new Error("OpenAI Engine not found");
         console.log("Checking");
         const response = await this.openai.aggregate(this.data, statements);
-        console.log(response);
         // assert response is of format "[{ Statement: .... Correction: ...}]"
         return JSON.parse(response) as Correction[];
     }
