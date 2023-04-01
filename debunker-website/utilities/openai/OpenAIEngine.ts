@@ -2,10 +2,11 @@
  * Core usage of OpenAI API
  */
 
-import { ChatCompletionRequestMessage, Configuration, OpenAIApi, CreateChatCompletionRequest } from "openai";
+import { Configuration, OpenAIApi, CreateCompletionRequest } from "openai";
 import { IOpenAIEngine } from "../types";
+import createPrompt from "./createPrompt";
 
-export type OpenAIEngineConfig = Pick<CreateChatCompletionRequest, 'model'>
+export type OpenAIEngineConfig = Pick<CreateCompletionRequest, 'model' | 'temperature' | 'max_tokens'>
 
 class OpenAIEngine implements IOpenAIEngine {
 
@@ -20,16 +21,13 @@ class OpenAIEngine implements IOpenAIEngine {
         this.config = config
     }
 
-    async aggregate(systemPrompt: string, message: string): Promise<string> {
-        const messages: ChatCompletionRequestMessage[] = [
-            { role: "system", content: systemPrompt },
-            { role: "user", content: message }
-        ]
-        const completion = await this.apiRef.createChatCompletion({
+    async aggregate(data: string, statement: string): Promise<string> {
+        const completion = await this.apiRef.createCompletion({
             ...(this.config),
-            messages
+            prompt: createPrompt(data, statement),
         });
-        const result = completion.data.choices[0].message?.content;
+        const result = completion.data.choices[0].text;
+        console.log(result);
         if (result) 
             return result;
         throw new Error("Could not get response");

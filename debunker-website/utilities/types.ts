@@ -5,5 +5,5 @@ export interface IDataInjector {
 }
 
 export interface IOpenAIEngine {
-    aggregate(systemPrompt: string, message: string): Promise<string>;
+    aggregate(data: string, statement: string): Promise<string>;
 }

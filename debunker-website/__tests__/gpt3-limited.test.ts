@@ -14,7 +14,7 @@ const testInjector: IDataInjector = {
     },
 }
 
-const TEST_STATEMENT = "השופטים בישראל ממנים את עצמם.";
+const TEST_STATEMENT = "גדעון סער רוצה שהשופטים ימנו את עצמם";
 
 describe("Creates a test for a limited scope, using gpt-3", () => {
     jest.setTimeout(40_000);
@@ -24,7 +24,7 @@ describe("Creates a test for a limited scope, using gpt-3", () => {
     })
     it("Creates the fack check module", async () => {
         engine = (await DataInjectedFactEngine.withInjectedData(testInjector, OpenAIInjectedFactEngine))
-            .withOpenAI(new OpenAIEngine({ model: "gpt-3.5-turbo" }));
+            .withOpenAI(new OpenAIEngine({ model: "text-davinci-003", temperature: 0.7, max_tokens: 2048 }));
     })
     it("tests it against a statement", async () => {
         const corrections = await engine.check(TEST_STATEMENT);
