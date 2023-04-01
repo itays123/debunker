@@ -9,7 +9,7 @@ export interface IDebunkerState {
 
 const debunkerProxy = proxy({
     status: "IDLE",
-    statement: '',
+    statement: 'לקואליציה אין וטו בועדה למינוי שופטים',
     corrections: []
 } as IDebunkerState)
 
@@ -35,9 +35,17 @@ export const clearStatement = () => {
     debunkerProxy.statement = '';
 }
 
-// Note: activate ONLY when corrections don't exist
-export const onCorrectionFetch = () => {
-    debunkerProxy.status = 'LOADING';
+// Note: activate ONLY when corrections don't exist and status is IDLE
+export const fetchCorrections = () => {
+    if (debunkerProxy.status === 'IDLE' && !debunkerProxy.corrections.length) {
+        debunkerProxy.status = 'LOADING';
+        fetch(`/api/check?statement=${encodeURI(debunkerProxy.statement)}`)
+            .then((res) => res.json())
+            .then((corrections) => onCorrectionsFound(corrections))
+            .catch(() => onCorrectionError())
+    }
+    else if (debunkerProxy.corrections.length) // clicked again after closing
+        debunkerProxy.status = 'DEBUNKED'
 }
 
 export const onCorrectionError = () => {
