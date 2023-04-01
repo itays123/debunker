@@ -2,6 +2,7 @@
 import { Correction } from '@/interfaces'
 import DataInjectedFactEngine from '@/utilities/engine/DataInjectedFactEngine'
 import OpenAIInjectedFactEngine from '@/utilities/engine/OpenAIInjectedFactEngine'
+import CompletionEngine from '@/utilities/openai/CompletionEngine'
 import OpenAIEngine from '@/utilities/openai/OpenAIEngine'
 import { IDataInjector } from '@/utilities/types'
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -25,7 +26,7 @@ export default async function handler(
   try {
     if (typeof req.query.statement === 'string') {
       const dataInjector: IDataInjector = testInjector; // refetch data when checking
-      const openai = new OpenAIEngine({ model: "text-davinci-003", temperature: 0.7, max_tokens: 2048 })
+      const openai = new CompletionEngine({ model: "text-davinci-003", temperature: 0.7, max_tokens: 2048 })
       const factCheckEngine = (await DataInjectedFactEngine.withInjectedData(dataInjector, OpenAIInjectedFactEngine))
         .withOpenAI(openai);
       const corrections = await factCheckEngine.check(req.query.statement)

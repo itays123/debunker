@@ -1,6 +1,7 @@
 import DataInjectedFactEngine from "@/utilities/engine/DataInjectedFactEngine";
 import FactCheckEngine from "@/utilities/engine/FactEngine";
 import OpenAIInjectedFactEngine from "@/utilities/engine/OpenAIInjectedFactEngine";
+import CompletionEngine from "@/utilities/openai/CompletionEngine";
 import OpenAIEngine from "@/utilities/openai/OpenAIEngine";
 import { IDataInjector } from "@/utilities/types";
 
@@ -15,6 +16,7 @@ const testInjector: IDataInjector = {
 }
 
 const TEST_STATEMENT = "גדעון סער רוצה שהשופטים ימנו את עצמם";
+const TEST_STATEMENT2 = "לקואליציה יש וטו בפועל בועדה למינוי שופטים";
 
 describe("Creates a test for a limited scope, using gpt-3", () => {
     jest.setTimeout(40_000);
@@ -24,11 +26,16 @@ describe("Creates a test for a limited scope, using gpt-3", () => {
     })
     it("Creates the fack check module", async () => {
         engine = (await DataInjectedFactEngine.withInjectedData(testInjector, OpenAIInjectedFactEngine))
-            .withOpenAI(new OpenAIEngine({ model: "text-davinci-003", temperature: 0.7, max_tokens: 2048 }));
+            .withOpenAI(new CompletionEngine({ model: "text-davinci-003", temperature: 0.7, max_tokens: 2048 }));
     })
     it("tests it against a statement", async () => {
         const corrections = await engine.check(TEST_STATEMENT);
         console.log(corrections);
         expect(corrections.length).toBeDefined();
+    })
+    it("tests it against a correct statement", async () => {
+        const corrections = await engine.check(TEST_STATEMENT2);
+        console.log(corrections);
+        expect(corrections.length).toEqual(0);
     })
 })
